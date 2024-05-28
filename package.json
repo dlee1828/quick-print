@@ -1,8 +1,12 @@
 {
-  "name": "quick-print",
-  "displayName": "quick-print",
+  "name": "very-quick-print",
+  "displayName": "very-quick-print",
+  "publisher": "dlee1828",
   "description": "",
-  "version": "0.0.1",
+  "version": "0.0.3",
+  "repository": {
+    "url": "https://github.com/dlee1828/quick-print"
+  },
   "engines": {
     "vscode": "^1.89.0"
   },
@@ -14,11 +18,11 @@
   "contributes": {
     "commands": [
       {
-        "command": "quick-print.quickPrintVariable",
+        "command": "very-quick-print.quickPrintVariable",
         "title": "Quick Print Variable"
       },
       {
-        "command": "quick-print.quickPrintLine",
+        "command": "very-quick-print.quickPrintLine",
         "title": "Quick Print Line"
       }
     ],
@@ -47,12 +51,12 @@
     },
     "keybindings": [
       {
-        "command": "quick-print.quickPrintLine",
+        "command": "very-quick-print.quickPrintLine",
         "key": "alt+cmd+l",
         "when": "editorTextFocus"
       },
       {
-        "command": "quick-print.quickPrintVariable",
+        "command": "very-quick-print.quickPrintVariable",
         "key": "alt+cmd+v",
         "when": "editorTextFocus"
       }

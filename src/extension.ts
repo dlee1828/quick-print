@@ -2,6 +2,10 @@
 // Import the module and reference it with the alias vscode in your code below
 import * as vscode from 'vscode';
 
+function escapeUnescapedQuotes(input: string): string {
+  return input.replace(/([^\\])"/g, '$1\\"').replace(/^"/, '\\"');
+}
+
 // This method is called when your extension is activated
 // Your extension is activated the very first time the command is executed
 export function activate(context: vscode.ExtensionContext) {
@@ -10,7 +14,7 @@ export function activate(context: vscode.ExtensionContext) {
   const printVariableTemplate = config.get<{ cpp: string }>('printVariableTemplates')?.cpp ?? "std::cout << QP_NAME << \": \" << QP_VALUE << \"\\n\";\n";
   const printLineTemplate = config.get<{ cpp: string }>('printLineTemplates')?.cpp ?? "std::cout << QP_LINE << \"\\n\";\n";
 
-  let quickPrintVariable = vscode.commands.registerTextEditorCommand('quick-print.quickPrintVariable', (editor, edit) => {
+  let quickPrintVariable = vscode.commands.registerTextEditorCommand('very-quick-print.quickPrintVariable', (editor, edit) => {
     const selection = editor.selection;
     if (!selection || selection.isEmpty) return;
     const selectionRange = new vscode.Range(selection.start.line, selection.start.character, selection.end.line, selection.end.character);
@@ -36,12 +40,12 @@ export function activate(context: vscode.ExtensionContext) {
     editor.selection = newSelection;
   });
 
-  let quickPrintLine = vscode.commands.registerTextEditorCommand('quick-print.quickPrintLine', (editor, edit) => {
+  let quickPrintLine = vscode.commands.registerTextEditorCommand('very-quick-print.quickPrintLine', (editor, edit) => {
     const selection = editor.selection;
 
     // Get padding at the start of the line containing selection.start
     const startLine = editor.document.lineAt(selection.start.line);
-    const lineText = startLine.text;
+    const lineText = escapeUnescapedQuotes(startLine.text);
     let padding = "";
     for (const chr of lineText) {
       if (chr == '\t' || chr == ' ') padding += chr;
