@@ -3,7 +3,7 @@
   "displayName": "very-quick-print",
   "publisher": "dlee1828",
   "description": "",
-  "version": "0.0.5",
+  "version": "0.0.6",
   "repository": {
     "url": "https://github.com/dlee1828/quick-print"
   },
@@ -38,15 +38,15 @@
           "properties": {
             "printVariableTemplates": {
               "type": "string",
-              "default": "std::cout << \"QP_NAME: \" << QP_VALUE << \"\\n\";\n"
+              "default": "std::cout << \"QP_NAME: \" << QP_VALUE << \"\\n\";"
             },
             "printLineTemplate": {
               "type": "string",
-              "default": "std::cout << \"QP_LINE\" << \"\\n\";\n"
+              "default": "std::cout << \"QP_LINE\" << \"\\n\";"
             },
             "printContainerTemplate": {
               "type": "string",
-              "default": "std::cout << \"QP_NAME:\\n\";\nfor (auto element : QP_NAME) { std::cout << element << \" \"; }\nstd::cout << \"\\n\";\n"
+              "default": "std::cout << \"QP_NAME:\\n\";\nfor (auto element : QP_NAME) { std::cout << element << \" \"; }\nstd::cout << \"\\n\";"
             }
           }
         }

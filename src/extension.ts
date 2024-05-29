@@ -67,10 +67,10 @@ type Config = {
 export function activate(context: vscode.ExtensionContext) {
   const config = vscode.workspace.getConfiguration('quickPrint');
   // Read a specific setting, for example, "mySetting"
-  const printVariableTemplate = config.get<LanguageConfig>('cpp')?.printVariableTemplate ?? "std::cout << \"QP_NAME: \" << QP_VALUE << \"\\n\";\n";
-  const printLineTemplate = config.get<LanguageConfig>('cpp')?.printLineTemplate ?? "std::cout << \"QP_LINE\" << \"\\n\";\n";
+  const printVariableTemplate = config.get<LanguageConfig>('cpp')?.printVariableTemplate ?? "std::cout << \"QP_NAME: \" << QP_VALUE << \"\\n\";";
+  const printLineTemplate = config.get<LanguageConfig>('cpp')?.printLineTemplate ?? "std::cout << \"QP_LINE\" << \"\\n\";";
   const printContainerTemplate = config.get<LanguageConfig>('cpp')?.printContainerTemplate ??
-    "std::cout << \"QP_NAME:\\n\";\nfor (auto element : QP_NAME) { std::cout << element << \" \"; }\nstd::cout << \"\\n\";\n";
+    "std::cout << \"QP_NAME:\\n\";\nfor (auto element : QP_NAME) { std::cout << element << \" \"; }\nstd::cout << \"\\n\";";
 
   let quickPrintVariable = vscode.commands.registerTextEditorCommand('very-quick-print.quickPrintVariable', (editor, edit) => {
     let variable = null;
@@ -79,7 +79,7 @@ export function activate(context: vscode.ExtensionContext) {
     const padding = getCurrentLinePadding(editor)
 
     editor.selections.forEach((selection, i) => {
-      const text = padding + printVariableTemplate.replace("QP_NAME", variable).replace("QP_VALUE", variable);
+      const text = padding + printVariableTemplate.replace("QP_NAME", variable).replace("QP_VALUE", variable) + "\n";
       const newPosition = new vscode.Position(selection.active.line + 1, 0);
       edit.insert(newPosition, text);
     })
@@ -94,7 +94,7 @@ export function activate(context: vscode.ExtensionContext) {
     const padding = getCurrentLinePadding(editor);
 
     const newPosition = new vscode.Position(selection.active.line + 1, 0);
-    const toPrint = padding + printLineTemplate.replace("QP_LINE", lineText.trim());
+    const toPrint = padding + printLineTemplate.replace("QP_LINE", lineText.trim()) + "\n";
     edit.insert(newPosition, toPrint);
   });
 
@@ -105,7 +105,7 @@ export function activate(context: vscode.ExtensionContext) {
     const padding = getCurrentLinePadding(editor)
 
     editor.selections.forEach((selection, i) => {
-      const text = applyPadding(printContainerTemplate.replaceAll("QP_NAME", container), padding);
+      const text = applyPadding(printContainerTemplate.replaceAll("QP_NAME", container), padding) + "\n";
       const newPosition = new vscode.Position(selection.active.line + 1, 0);
       edit.insert(newPosition, text);
     })
