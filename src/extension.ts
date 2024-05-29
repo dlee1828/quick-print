@@ -73,12 +73,13 @@ export function activate(context: vscode.ExtensionContext) {
     "std::cout << \"QP_NAME:\\n\";\nfor (auto element : QP_NAME) { std::cout << element << \" \"; }\nstd::cout << \"\\n\";\n";
 
   let quickPrintVariable = vscode.commands.registerTextEditorCommand('very-quick-print.quickPrintVariable', (editor, edit) => {
-    const currentWord = getCurrentWord(editor)
-    if (!currentWord) return;
+    let variable = null;
+    variable = getHighlightedText(editor) ?? getCurrentWord(editor);
+    if (!variable) return;
     const padding = getCurrentLinePadding(editor)
 
     editor.selections.forEach((selection, i) => {
-      const text = padding + printVariableTemplate.replace("QP_NAME", currentWord).replace("QP_VALUE", currentWord);
+      const text = padding + printVariableTemplate.replace("QP_NAME", variable).replace("QP_VALUE", variable);
       const newPosition = new vscode.Position(selection.active.line + 1, 0);
       edit.insert(newPosition, text);
     })
@@ -98,12 +99,13 @@ export function activate(context: vscode.ExtensionContext) {
   });
 
   let quickPrintContainer = vscode.commands.registerTextEditorCommand('very-quick-print.quickPrintContainer', (editor, edit) => {
-    const currentWord = getCurrentWord(editor)
-    if (!currentWord) return;
+    const container = getHighlightedText(editor) ?? getCurrentWord(editor)
+    if (!container) return;
+
     const padding = getCurrentLinePadding(editor)
 
     editor.selections.forEach((selection, i) => {
-      const text = applyPadding(printContainerTemplate.replaceAll("QP_NAME", currentWord), padding);
+      const text = applyPadding(printContainerTemplate.replaceAll("QP_NAME", container), padding);
       const newPosition = new vscode.Position(selection.active.line + 1, 0);
       edit.insert(newPosition, text);
     })
