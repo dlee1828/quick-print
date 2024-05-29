@@ -3,7 +3,7 @@
   "displayName": "very-quick-print",
   "publisher": "dlee1828",
   "description": "",
-  "version": "0.0.3",
+  "version": "0.0.4",
   "repository": {
     "url": "https://github.com/dlee1828/quick-print"
   },
@@ -24,26 +24,29 @@
       {
         "command": "very-quick-print.quickPrintLine",
         "title": "Quick Print Line"
+      },
+      {
+        "command": "very-quick-print.quickPrintContainer",
+        "title": "Quick Print Container"
       }
     ],
     "configuration": {
       "type": "object",
       "properties": {
-        "quickPrint.printVariableTemplates": {
+        "quickPrint.cpp": {
           "type": "object",
           "properties": {
-            "cpp": {
+            "printVariableTemplates": {
               "type": "string",
               "default": "std::cout << \"QP_NAME: \" << QP_VALUE << \"\\n\";\n"
-            }
-          }
-        },
-        "quickPrint.printLineTemplates": {
-          "type": "object",
-          "properties": {
-            "cpp": {
+            },
+            "printLineTemplate": {
               "type": "string",
               "default": "std::cout << \"QP_LINE\" << \"\\n\";\n"
+            },
+            "printContainerTemplate": {
+              "type": "string",
+              "default": "std::cout << \"QP_NAME:\\n\";\nfor (auto element : QP_NAME) { std::cout << element << \" \"; }\nstd::cout << \"\\n\";\n"
             }
           }
         }
@@ -58,6 +61,11 @@
       {
         "command": "very-quick-print.quickPrintVariable",
         "key": "alt+cmd+v",
+        "when": "editorTextFocus"
+      },
+      {
+        "command": "very-quick-print.quickPrintContainer",
+        "key": "alt+cmd+c",
         "when": "editorTextFocus"
       }
     ]
